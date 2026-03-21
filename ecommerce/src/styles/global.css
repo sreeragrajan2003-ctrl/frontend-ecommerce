@@ -1,0 +1,25 @@
+/* Remove default browser spacing on all elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* padding doesn't add to element width */
+}
+
+/* App-wide font and background */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f8f8f8;
+  color: #222;
+}
+
+/* Remove underline from all links by default */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Make sure buttons use the same font as the rest of the app */
+button {
+  cursor: pointer;
+  font-family: inherit;
+}

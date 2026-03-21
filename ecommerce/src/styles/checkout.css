@@ -1,0 +1,214 @@
+.checkout-container {
+  padding: 1rem 0;
+}
+
+.checkout-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+/* Two column layout */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.checkout-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+/* Address card */
+.address-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: border-color 0.2s;
+}
+
+.address-selected {
+  border-color: #222;
+}
+
+.address-radio input {
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.address-details {
+  flex: 1;
+}
+
+.address-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.address-line {
+  font-size: 0.875rem;
+  color: #555;
+  margin-bottom: 0.15rem;
+}
+
+.address-phone {
+  font-size: 0.875rem;
+  color: #888;
+  margin-top: 0.25rem;
+}
+
+/* Add address button */
+.add-address-btn {
+  background: none;
+  border: 1px dashed #aaa;
+  border-radius: 8px;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.9rem;
+  color: #555;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 0.5rem;
+  transition: all 0.2s;
+}
+
+.add-address-btn:hover {
+  border-color: #222;
+  color: #222;
+}
+
+/* Inline address form */
+.address-form {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.address-form h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.address-form input {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  background: white;
+}
+
+.address-form input:focus {
+  border-color: #222;
+}
+
+.address-form-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.save-address-btn {
+  flex: 1;
+  padding: 0.7rem;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.save-address-btn:hover {
+  background: #444;
+}
+
+.cancel-btn {
+  padding: 0.7rem 1.25rem;
+  background: white;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+/* Right — order summary */
+.checkout-right {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 80px;
+}
+
+.checkout-items {
+  margin-bottom: 1rem;
+}
+
+.checkout-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #444;
+}
+
+.checkout-item:last-child {
+  border-bottom: none;
+}
+
+.checkout-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 1rem 0;
+  padding-top: 0.75rem;
+  border-top: 2px solid #f0f0f0;
+}
+
+.cod-note {
+  font-size: 0.875rem;
+  color: #888;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.place-order-btn {
+  width: 100%;
+  padding: 0.9rem;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.place-order-btn:hover {
+  background: #444;
+}
+
+.place-order-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}

@@ -1,0 +1,151 @@
+/* Full product detail layout — image left, info right */
+.product-detail-container {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  padding: 2rem 0;
+}
+
+/* Image placeholder */
+.product-detail-img {
+  width: 360px;
+  height: 360px;
+  background: #f0f0f0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6rem;
+  flex-shrink: 0;
+}
+
+/* Right side info */
+.product-detail-info {
+  flex: 1;
+}
+
+.product-detail-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.product-detail-categories {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.product-detail-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+.product-detail-desc {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.product-detail-stock {
+  font-size: 0.95rem;
+  color: #27ae60;
+  margin-bottom: 1.5rem;
+}
+
+/* Quantity selector */
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.quantity-selector label {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.quantity-selector button {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.quantity-selector button:hover {
+  background: #f0f0f0;
+}
+
+.quantity-selector span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Add to cart button */
+.add-to-cart-btn {
+  padding: 0.9rem 2.5rem;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 1rem;
+}
+
+.add-to-cart-btn:hover {
+  background: #444;
+}
+
+.add-to-cart-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* Cart feedback messages */
+.cart-msg {
+  font-size: 0.9rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+.cart-msg-success {
+  background: #f0fff4;
+  color: #1a7f3c;
+  border: 1px solid #b2f0c8;
+}
+
+.cart-msg-error {
+  background: #fff0f0;
+  color: #cc0000;
+  border: 1px solid #ffcccc;
+}
+
+.login-prompt {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+.login-prompt a {
+  color: #222;
+  font-weight: 600;
+  text-decoration: underline;
+}

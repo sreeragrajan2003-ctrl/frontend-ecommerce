@@ -1,0 +1,422 @@
+/* =====================
+   SELLER LAYOUT
+   ===================== */
+
+/* Full page wrapper — sidebar + main content side by side */
+.seller-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Left sidebar */
+.seller-sidebar {
+  width: 220px;
+  background: #222;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+/* Commerce logo at top */
+.seller-sidebar-logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 1.5rem;
+  border-bottom: 1px solid #333;
+  letter-spacing: 1px;
+}
+
+/* Nav links */
+.seller-nav {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.seller-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.5rem;
+  color: #aaa;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.seller-nav-link:hover {
+  background: #333;
+  color: white;
+}
+
+/* Active link highlighted */
+.seller-nav-active {
+  background: #333;
+  color: white;
+  border-left: 3px solid white;
+}
+
+.seller-nav-icon {
+  font-size: 1.1rem;
+}
+
+/* Logout at bottom */
+.seller-sidebar-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid #333;
+}
+
+.seller-logout-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s;
+  padding: 0;
+}
+
+.seller-logout-btn:hover {
+  color: white;
+}
+
+/* Main content — pushed right to make room for sidebar */
+.seller-main {
+  margin-left: 220px;
+  flex: 1;
+  padding: 2rem;
+  background: #f8f8f8;
+  min-height: 100vh;
+}
+
+/* =====================
+   COMMON SELLER PAGES
+   ===================== */
+
+.seller-page-container {
+  max-width: 1000px;
+}
+
+.seller-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.seller-page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.seller-empty {
+  text-align: center;
+  padding: 3rem 0;
+  color: #888;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* =====================
+   DASHBOARD
+   ===================== */
+
+.dashboard-container {
+  max-width: 800px;
+}
+
+.dashboard-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+/* 4 stat cards in a row */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.stat-icon {
+  font-size: 2rem;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 0.25rem;
+}
+
+/* =====================
+   PRODUCTS TABLE
+   ===================== */
+
+.add-product-btn {
+  padding: 0.65rem 1.25rem;
+  background: #222;
+  color: white;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-product-btn:hover {
+  background: #444;
+}
+
+.products-table-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.products-table th {
+  background: #f8f8f8;
+  padding: 0.9rem 1.25rem;
+  text-align: left;
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.products-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f8f8f8;
+  color: #333;
+  vertical-align: middle;
+}
+
+.products-table tr:last-child td {
+  border-bottom: none;
+}
+
+.products-table tr:hover td {
+  background: #fafafa;
+}
+
+.product-table-name {
+  font-weight: 600;
+  color: #222;
+}
+
+.product-table-cats {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+/* Stock badges */
+.stock-badge {
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.stock-in {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.stock-out {
+  background: #ffebee;
+  color: #c62828;
+}
+
+/* Edit and delete buttons in table */
+.product-table-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-btn {
+  padding: 0.4rem 0.85rem;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.edit-btn:hover {
+  background: #e0e0e0;
+}
+
+.delete-btn {
+  padding: 0.4rem 0.85rem;
+  background: #fff0f0;
+  color: #c62828;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background: #ffdddd;
+}
+
+/* =====================
+   PRODUCT FORM
+   ===================== */
+
+.product-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 600px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  font-family: inherit;
+  transition: border 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #222;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Price and Stock side by side */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-hint {
+  font-size: 0.78rem;
+  color: #aaa;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.save-product-btn {
+  padding: 0.75rem 2rem;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.save-product-btn:hover {
+  background: #444;
+}
+
+.save-product-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* =====================
+   SELLER ORDERS
+   ===================== */
+
+/* Status update button */
+.status-update-btn {
+  padding: 0.4rem 0.9rem;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.status-update-btn:hover {
+  background: #444;
+}
+
+.status-update-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}

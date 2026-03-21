@@ -1,0 +1,134 @@
+/* Layout wrapper */
+.buyer-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8f8f8;
+}
+
+/* Page content between navbar and footer */
+.buyer-main {
+  flex: 1;
+  padding: 2rem;
+  padding-bottom: 80px;  /* ✅ stops content hiding behind fixed footer */
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Section spacing */
+.home-section {
+  margin-bottom: 3rem;
+}
+
+/* Section heading */
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #222;
+  border-left: 4px solid #222;
+  padding-left: 0.75rem;
+}
+
+/* Filter banner shown when search or category is active */
+.filter-banner {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.clear-filter {
+  margin-left: auto;
+  color: #e74c3c;
+  font-size: 0.875rem;
+  text-decoration: underline;
+}
+
+/* Product grid — 4 columns on wide screens */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Product card */
+.product-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: block;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* Image placeholder area */
+.product-card-img {
+  background: #f0f0f0;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+/* Card text area */
+.product-card-body {
+  padding: 1rem;
+}
+
+.product-card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #222;
+}
+
+.product-card-categories {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.product-card-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0.3rem;
+}
+
+.product-card-stock {
+  font-size: 0.8rem;
+  color: #27ae60;
+}
+
+.out-of-stock {
+  color: #e74c3c;
+}
+
+/* Loading and empty states */
+.loading-text {
+  color: #888;
+  font-size: 1rem;
+  padding: 2rem 0;
+}
+
+.empty-text {
+  color: #aaa;
+  font-size: 1rem;
+  padding: 2rem 0;
+}

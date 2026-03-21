@@ -1,0 +1,109 @@
+.account-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  max-width: 680px;
+}
+
+/* White card for each section */
+.account-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.account-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.account-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+/* Profile info rows */
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.account-info-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+
+.account-label {
+  font-size: 0.85rem;
+  color: #888;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.account-value {
+  font-size: 0.95rem;
+  color: #222;
+  font-weight: 500;
+}
+
+.account-role {
+  background: #222;
+  color: white;
+  padding: 0.2rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+/* Logout button */
+.logout-btn {
+  padding: 0.7rem 1.5rem;
+  background: white;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: #fff0f0;
+}
+
+/* Address card in account page */
+.address-card {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.delete-address-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #e74c3c;
+  padding: 0.25rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.delete-address-btn:hover {
+  opacity: 1;
+}
