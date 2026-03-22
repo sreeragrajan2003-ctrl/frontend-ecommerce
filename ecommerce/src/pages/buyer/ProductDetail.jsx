@@ -5,17 +5,21 @@ import { useAuth } from '../../context/AuthContext'
 import BuyerLayout from '../../components/BuyerLayout'
 
 function ProductDetail() {
-  const { id } = useParams()       // Get product id from URL e.g. /product/3
+  const { id } = useParams()      // product id from URL e.g. /product/3
   const { user } = useAuth()
   const navigate = useNavigate()
 
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [quantity, setQuantity] = useState(1)
-  const [cartMsg, setCartMsg] = useState('')   // success or error message after add to cart
+  const [cartMsg, setCartMsg] = useState('')
   const [cartLoading, setCartLoading] = useState(false)
 
-  // Fetch single product from backend when page loads
+  // Which image is currently shown in the main viewer
+  // index into product.images array
+  const [selectedImage, setSelectedImage] = useState(0)
+
+  // Fetch product when page loads
   useEffect(() => {
     api.get(`/product/${id}/`)
       .then(res => setProduct(res.data))
@@ -23,10 +27,15 @@ function ProductDetail() {
       .finally(() => setLoading(false))
   }, [id])
 
-  // Add product to cart
+  // Reset selected image when product changes
+  useEffect(() => {
+    setSelectedImage(0)
+  }, [product])
+
+  // Add to cart
   async function handleAddToCart() {
 
-    // If not logged in, send to login page
+    // Not logged in — send to login
     if (!user) {
       navigate('/login/buyer')
       return
@@ -70,50 +79,82 @@ function ProductDetail() {
     )
   }
 
+  // Determine if product has images
+  const hasImages = product.images && product.images.length > 0
+
   return (
     <BuyerLayout>
       <div className="product-detail-container">
 
-        {/* ✅ Show real image if available */}
-        <div className="product-detail-img">
-          {product.image ? (
-            <img
-              src={product.image}
-              alt={product.name}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                borderRadius: '12px'
-              }}
-            />
-          ) : (
-            '🛍️'
+        {/* ===== LEFT — Image gallery ===== */}
+        <div className="product-detail-images">
+
+          {/* Main large image viewer */}
+          <div className="product-detail-main-img">
+            {hasImages ? (
+              <img
+                src={product.images[selectedImage]?.url}
+                alt={product.name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: '12px'
+                }}
+              />
+            ) : (
+              // No image uploaded — show emoji
+              <span style={{ fontSize: '6rem' }}>🛍️</span>
+            )}
+          </div>
+
+          {/* Thumbnail row — only shown when more than 1 image */}
+          {hasImages && product.images.length > 1 && (
+            <div className="product-thumbnail-row">
+              {product.images.map((img, index) => (
+                <div
+                  key={img.id}
+                  className={`product-thumbnail ${selectedImage === index ? 'thumbnail-active' : ''}`}
+                  onClick={() => setSelectedImage(index)}
+                >
+                  <img
+                    src={img.url}
+                    alt={`view ${index + 1}`}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </div>
+              ))}
+            </div>
           )}
+
         </div>
 
-        {/* Right — product info */}
+        {/* ===== RIGHT — Product info ===== */}
         <div className="product-detail-info">
 
           <h1 className="product-detail-name">{product.name}</h1>
 
+          {/* Categories */}
           <p className="product-detail-categories">
             {product.categories.join(', ')}
           </p>
 
+          {/* Price */}
           <p className="product-detail-price">₹{product.price}</p>
 
+          {/* Description */}
           <p className="product-detail-desc">
             {product.description || 'No description provided.'}
           </p>
 
+          {/* Stock */}
           <p className={`product-detail-stock ${product.stock === 0 ? 'out-of-stock' : ''}`}>
             {product.stock === 0
               ? 'Out of stock'
               : `${product.stock} items available`}
           </p>
 
-          {/* Quantity selector — only show if in stock */}
+          {/* Quantity selector — only if in stock */}
           {product.stock > 0 && (
             <div className="quantity-selector">
               <label>Quantity:</label>
@@ -131,7 +172,7 @@ function ProductDetail() {
             </div>
           )}
 
-          {/* Add to cart button */}
+          {/* Add to cart button — only if in stock */}
           {product.stock > 0 && (
             <button
               className="add-to-cart-btn"
@@ -142,14 +183,14 @@ function ProductDetail() {
             </button>
           )}
 
-          {/* Success or error message after adding to cart */}
+          {/* Cart success or error message */}
           {cartMsg && (
             <p className={`cart-msg ${cartMsg.includes('success') ? 'cart-msg-success' : 'cart-msg-error'}`}>
               {cartMsg}
             </p>
           )}
 
-          {/* If not logged in show login prompt */}
+          {/* Login prompt if not logged in */}
           {!user && (
             <p className="login-prompt">
               <Link to="/login/buyer">Login</Link> to add to cart

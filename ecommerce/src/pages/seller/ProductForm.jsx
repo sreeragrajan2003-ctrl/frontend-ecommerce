@@ -9,24 +9,20 @@ function ProductForm() {
   const isEditing = Boolean(id)
 
   const [form, setForm] = useState({
-    name: '',
-    description: '',
-    price: '',
-    stock: '',
-    categories: '',
+    name: '', description: '', price: '', stock: '', categories: '',
   })
 
-  // Stores the existing image URL when editing
-  const [existingImage, setExistingImage] = useState(null)
+  // Existing images from backend — list of { id, url }
+  const [existingImages, setExistingImages] = useState([])
 
-  // Stores the new image file selected by seller
-  const [imageFile, setImageFile] = useState(null)
+  // Ids of existing images marked for deletion
+  const [deleteImageIds, setDeleteImageIds] = useState([])
 
-  // Preview URL for the newly selected image
-  const [imagePreview, setImagePreview] = useState(null)
+  // New image files selected by seller
+  const [newImageFiles, setNewImageFiles] = useState([])
 
-  // Whether seller wants to delete the existing image
-  const [deleteImage, setDeleteImage] = useState(false)
+  // Preview URLs for newly selected images
+  const [newImagePreviews, setNewImagePreviews] = useState([])
 
   const [loading, setLoading] = useState(isEditing)
   const [saving, setSaving] = useState(false)
@@ -34,7 +30,6 @@ function ProductForm() {
 
   useEffect(() => {
     if (!isEditing) return
-
     api.get(`/product/${id}/`)
       .then(res => {
         const p = res.data
@@ -45,8 +40,8 @@ function ProductForm() {
           stock: p.stock,
           categories: p.categories.join(', '),
         })
-        // Save existing image URL to show as preview
-        setExistingImage(p.image)
+        // Load existing images list
+        setExistingImages(p.images || [])
       })
       .catch(() => setError('Failed to load product.'))
       .finally(() => setLoading(false))
@@ -56,22 +51,32 @@ function ProductForm() {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  // When seller picks an image file
-  function handleImageChange(e) {
-    const file = e.target.files[0]
-    if (!file) return
-    setImageFile(file)
-    setDeleteImage(false)
-    // Create a local preview URL so seller can see the image
-    setImagePreview(URL.createObjectURL(file))
+  // When seller picks new image files
+  function handleNewImages(e) {
+    const files = Array.from(e.target.files)
+    if (files.length === 0) return
+
+    // Add to existing new files list
+    setNewImageFiles(prev => [...prev, ...files])
+
+    // Create preview URLs for each new file
+    const previews = files.map(f => URL.createObjectURL(f))
+    setNewImagePreviews(prev => [...prev, ...previews])
   }
 
-  // When seller clicks delete image
-  function handleDeleteImage() {
-    setDeleteImage(true)
-    setImageFile(null)
-    setImagePreview(null)
-    setExistingImage(null)
+  // Remove a newly selected image before upload
+  function removeNewImage(index) {
+    setNewImageFiles(prev => prev.filter((_, i) => i !== index))
+    setNewImagePreviews(prev => prev.filter((_, i) => i !== index))
+  }
+
+  // Toggle deletion of an existing image
+  function toggleDeleteExisting(imgId) {
+    setDeleteImageIds(prev =>
+      prev.includes(imgId)
+        ? prev.filter(i => i !== imgId)   // unmark
+        : [...prev, imgId]                // mark for deletion
+    )
   }
 
   async function handleSubmit(e) {
@@ -79,8 +84,6 @@ function ProductForm() {
     setError('')
     setSaving(true)
 
-    // ✅ Use FormData instead of JSON
-    // This is required for file uploads
     const formData = new FormData()
     formData.append('name', form.name)
     formData.append('description', form.description)
@@ -88,14 +91,14 @@ function ProductForm() {
     formData.append('stock', form.stock)
     formData.append('categories', form.categories)
 
-    // Append image file if selected
-    if (imageFile) {
-      formData.append('image', imageFile)
-    }
+    // ✅ Append each new image file with key 'images'
+    newImageFiles.forEach(file => {
+      formData.append('images', file)
+    })
 
-    // Tell backend to delete image if seller clicked delete
-    if (deleteImage) {
-      formData.append('delete_image', 'true')
+    // ✅ Send ids of images to delete as comma separated string
+    if (deleteImageIds.length > 0) {
+      formData.append('delete_images', deleteImageIds.join(','))
     }
 
     try {
@@ -197,52 +200,62 @@ function ProductForm() {
                 value={form.categories}
                 onChange={handleChange}
               />
-              <span className="form-hint">
-                Separate multiple categories with a comma
-              </span>
+              <span className="form-hint">Separate multiple categories with a comma</span>
             </div>
 
-            {/* ✅ Image upload section */}
+            {/* ✅ Images section */}
             <div className="form-group">
-              <label>Product Image</label>
+              <label>Product Images</label>
 
-              {/* Show existing or new preview */}
-              {(imagePreview || existingImage) && (
-                <div className="image-preview-wrapper">
-                  <img
-                    src={imagePreview || existingImage}
-                    alt="Product preview"
-                    className="image-preview"
-                  />
-                  <button
-                    type="button"
-                    className="delete-image-btn"
-                    onClick={handleDeleteImage}
-                  >
-                    🗑️ Remove Image
-                  </button>
+              {/* Existing images — shown when editing */}
+              {existingImages.length > 0 && (
+                <div className="image-gallery">
+                  {existingImages.map(img => (
+                    <div
+                      key={img.id}
+                      className={`image-gallery-item ${deleteImageIds.includes(img.id) ? 'image-marked-delete' : ''}`}
+                    >
+                      <img src={img.url} alt="product" className="gallery-img" />
+                      <button
+                        type="button"
+                        className="gallery-delete-btn"
+                        onClick={() => toggleDeleteExisting(img.id)}
+                      >
+                        {deleteImageIds.includes(img.id) ? '↩ Undo' : '🗑️ Remove'}
+                      </button>
+                    </div>
+                  ))}
                 </div>
               )}
 
-              {/* Only show file input if no image selected */}
-              {!imagePreview && !existingImage && (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="image-input"
-                />
+              {/* New image previews */}
+              {newImagePreviews.length > 0 && (
+                <div className="image-gallery" style={{ marginTop: '0.75rem' }}>
+                  {newImagePreviews.map((preview, index) => (
+                    <div key={index} className="image-gallery-item">
+                      <img src={preview} alt="new" className="gallery-img" />
+                      <button
+                        type="button"
+                        className="gallery-delete-btn"
+                        onClick={() => removeNewImage(index)}
+                      >
+                        🗑️ Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
               )}
 
-              {/* Allow replacing image if one exists */}
-              {(imagePreview || existingImage) && (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="image-input"
-                />
-              )}
+              {/* File input — multiple allowed */}
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleNewImages}
+                className="image-input"
+                style={{ marginTop: '0.75rem' }}
+              />
+              <span className="form-hint">You can select multiple images at once</span>
             </div>
 
             <div className="form-actions">
@@ -258,9 +271,7 @@ function ProductForm() {
                 className="save-product-btn"
                 disabled={saving}
               >
-                {saving
-                  ? 'Saving...'
-                  : isEditing ? 'Update Product' : 'Add Product'}
+                {saving ? 'Saving...' : isEditing ? 'Update Product' : 'Add Product'}
               </button>
             </div>
 

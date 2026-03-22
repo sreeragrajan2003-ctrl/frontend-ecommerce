@@ -5,11 +5,7 @@ import BuyerLayout from '../../components/BuyerLayout'
 
 function Home() {
   const location = useLocation()
-
-  // All products fetched from backend
   const [products, setProducts] = useState([])
-
-  // Loading state — shows loading message while fetching
   const [loading, setLoading] = useState(true)
 
   // Read search or category from URL
@@ -21,20 +17,14 @@ function Home() {
   // Fetch products whenever the URL query changes
   useEffect(() => {
     setLoading(true)
-
     let url = '/product/'
-
-    // If search query exists, pass it to backend
-    if (searchQuery) {
-      url = `/product/?search=${searchQuery}`
-    }
+    if (searchQuery) url = `/product/?search=${searchQuery}`
 
     api.get(url)
       .then(res => {
         let data = res.data
 
-        // If category filter is active, filter on frontend
-        // because backend search only supports name/category text search
+        // Filter by category on frontend if category is selected
         if (categoryQuery) {
           data = data.filter(p =>
             p.categories.some(c =>
@@ -49,7 +39,7 @@ function Home() {
       .finally(() => setLoading(false))
   }, [searchQuery, categoryQuery])
 
-  // Latest 4 products — sorted by id descending (highest id = newest)
+  // Latest 4 products — highest id = newest
   const latestProducts = [...products]
     .sort((a, b) => b.id - a.id)
     .slice(0, 4)
@@ -57,16 +47,20 @@ function Home() {
   return (
     <BuyerLayout>
 
-      {/* Show active filter if search or category is selected */}
+      {/* Filter banner — shown when search or category is active */}
       {(searchQuery || categoryQuery) && (
         <div className="filter-banner">
-          {searchQuery && <span>Search results for: <strong>{searchQuery}</strong></span>}
-          {categoryQuery && <span>Category: <strong>{categoryQuery}</strong></span>}
+          {searchQuery && (
+            <span>Search results for: <strong>{searchQuery}</strong></span>
+          )}
+          {categoryQuery && (
+            <span>Category: <strong>{categoryQuery}</strong></span>
+          )}
           <Link to="/" className="clear-filter">Clear filter</Link>
         </div>
       )}
 
-      {/* Latest products section — only shown on home without filters */}
+      {/* Latest products — only shown on home page without filters */}
       {!searchQuery && !categoryQuery && (
         <section className="home-section">
           <h2 className="section-title">Latest Products</h2>
@@ -112,27 +106,39 @@ function Home() {
   )
 }
 
-// ProductCard is a small component used inside Home
-// Kept in same file since it is only used here
-// product = one product object from the API
+// ✅ Single ProductCard — shows first image from images array
+// If no image uploaded, shows emoji placeholder
 function ProductCard({ product }) {
+
+  // Pick the first image from the images array
+  // images is now a list of { id, url } objects
+  const firstImage = product.images && product.images.length > 0
+    ? product.images[0].url
+    : null
+
   return (
     <Link to={`/product/${product.id}`} className="product-card">
 
-      {/* Product image placeholder — we have no image field yet */}
+      {/* Product image — real or emoji fallback */}
       <div className="product-card-img">
-        🛍️
+        {firstImage ? (
+          <img
+            src={firstImage}
+            alt={product.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        ) : (
+          '🛍️'
+        )}
       </div>
 
+      {/* Product info */}
       <div className="product-card-body">
         <h3 className="product-card-name">{product.name}</h3>
-
         <p className="product-card-categories">
           {product.categories.join(', ')}
         </p>
-
         <p className="product-card-price">₹{product.price}</p>
-
         <p className={`product-card-stock ${product.stock === 0 ? 'out-of-stock' : ''}`}>
           {product.stock === 0 ? 'Out of stock' : `${product.stock} in stock`}
         </p>
@@ -143,35 +149,3 @@ function ProductCard({ product }) {
 }
 
 export default Home
-
-function ProductCard({ product }) {
-  return (
-    <Link to={`/product/${product.id}`} className="product-card">
-
-      {/* ✅ Show real image if available, otherwise show emoji */}
-      <div className="product-card-img">
-        {product.image ? (
-          <img
-            src={product.image}
-            alt={product.name}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        ) : (
-          '🛍️'
-        )}
-      </div>
-
-      <div className="product-card-body">
-        <h3 className="product-card-name">{product.name}</h3>
-        <p className="product-card-categories">
-          {product.categories.join(', ')}
-        </p>
-        <p className="product-card-price">₹{product.price}</p>
-        <p className={`product-card-stock ${product.stock === 0 ? 'out-of-stock' : ''}`}>
-          {product.stock === 0 ? 'Out of stock' : `${product.stock} in stock`}
-        </p>
-      </div>
-
-    </Link>
-  )
-}

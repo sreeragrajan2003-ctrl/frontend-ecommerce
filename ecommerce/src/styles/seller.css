@@ -493,3 +493,223 @@
   flex-shrink: 0;
   font-weight: 500;
 }
+
+/* Multiple image gallery */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.image-gallery-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Image marked for deletion — greyed out with red border */
+.image-marked-delete {
+  opacity: 0.4;
+  outline: 2px solid #e74c3c;
+  border-radius: 8px;
+}
+
+.gallery-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.gallery-delete-btn {
+  font-size: 0.78rem;
+  padding: 0.25rem 0.5rem;
+  background: #fff0f0;
+  color: #c62828;
+  border: 1px solid #ffcccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.gallery-delete-btn:hover {
+  background: #ffdddd;
+}
+
+/* =====================
+   DASHBOARD UPDATES
+   ===================== */
+
+/* Clickable stat card */
+.stat-card-clickable {
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+
+.stat-card-clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+/* Colored icon circle inside stat card */
+.stat-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon-wrapper .stat-icon {
+  font-size: 1.4rem;
+}
+
+/* Arrow shown on hover */
+.stat-arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #aaa;
+  transition: color 0.15s, right 0.15s;
+}
+
+.stat-card-clickable:hover .stat-arrow {
+  color: #555;
+  right: 0.75rem;
+}
+
+/* Dashboard sections */
+.dashboard-section {
+  margin-top: 2rem;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.dashboard-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.dashboard-view-all {
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.dashboard-view-all:hover {
+  color: #222;
+}
+
+/* Empty state inside dashboard section */
+.dashboard-empty {
+  text-align: center;
+  padding: 2rem 0;
+  color: #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dashboard-add-btn {
+  padding: 0.6rem 1.25rem;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dashboard-add-btn:hover {
+  background: #444;
+}
+
+/* Dashboard table */
+.dashboard-table-wrapper {
+  overflow-x: auto;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.dashboard-table th {
+  background: #f8f8f8;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.78rem;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dashboard-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #f8f8f8;
+  color: #333;
+  vertical-align: middle;
+}
+
+.dashboard-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Clickable order row */
+.dashboard-order-row {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dashboard-order-row:hover td {
+  background: #fafafa;
+}
+
+/* Product cell with thumbnail */
+.dashboard-product-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dashboard-product-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.dashboard-product-name {
+  font-weight: 600;
+  color: #222;
+}
