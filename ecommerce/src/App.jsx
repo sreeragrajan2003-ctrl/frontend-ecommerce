@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -19,22 +19,24 @@ import ProductForm from './pages/seller/ProductForm'
 import SellerOrders from './pages/seller/SellerOrders'
 import SellerAccount from './pages/seller/SellerAccount'
 
+import NotFound from './pages/NotFound'
+
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
 
-          {/* Auth */}
+          {/* ===== AUTH ===== */}
           <Route path="/register" element={<Register />} />
           <Route path="/login/buyer" element={<LoginBuyer />} />
           <Route path="/login/seller" element={<LoginSeller />} />
 
-          {/* Buyer public */}
+          {/* ===== BUYER PUBLIC ===== */}
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetail />} />
 
-          {/* Buyer protected */}
+          {/* ===== BUYER PROTECTED ===== */}
           <Route path="/cart" element={
             <ProtectedRoute role="buyer"><Cart /></ProtectedRoute>
           } />
@@ -48,7 +50,7 @@ function App() {
             <ProtectedRoute role="buyer"><Account /></ProtectedRoute>
           } />
 
-          {/* Seller protected */}
+          {/* ===== SELLER PROTECTED ===== */}
           <Route path="/seller/dashboard" element={
             <ProtectedRoute role="seller"><Dashboard /></ProtectedRoute>
           } />
@@ -68,7 +70,8 @@ function App() {
             <ProtectedRoute role="seller"><SellerAccount /></ProtectedRoute>
           } />
 
-          <Route path="*" element={<Navigate to="/" />} />
+          {/* ===== 404 ===== */}
+          <Route path="*" element={<NotFound />} />
 
         </Routes>
       </BrowserRouter>

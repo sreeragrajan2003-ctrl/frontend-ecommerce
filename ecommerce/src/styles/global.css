@@ -23,3 +23,63 @@ button {
   cursor: pointer;
   font-family: inherit;
 }
+
+
+/* Loader spinner */
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.loader-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid #222;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 404 page */
+.notfound-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  gap: 1rem;
+}
+
+.notfound-code {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #222;
+  line-height: 1;
+}
+
+.notfound-msg {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+.notfound-link {
+  padding: 0.75rem 2rem;
+  background: #222;
+  color: white;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+.notfound-link:hover {
+  background: #444;
+}

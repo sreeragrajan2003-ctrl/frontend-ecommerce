@@ -74,9 +74,22 @@ function ProductDetail() {
     <BuyerLayout>
       <div className="product-detail-container">
 
-        {/* Left — product image placeholder */}
+        {/* ✅ Show real image if available */}
         <div className="product-detail-img">
-          🛍️
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.name}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                borderRadius: '12px'
+              }}
+            />
+          ) : (
+            '🛍️'
+          )}
         </div>
 
         {/* Right — product info */}

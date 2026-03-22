@@ -4,24 +4,34 @@ import api from '../../api/axios'
 import SellerLayout from '../../components/SellerLayout'
 
 function ProductForm() {
-  const { id } = useParams()   // id exists when editing, undefined when creating
+  const { id } = useParams()
   const navigate = useNavigate()
-
-  const isEditing = Boolean(id)  // true if editing, false if creating
+  const isEditing = Boolean(id)
 
   const [form, setForm] = useState({
     name: '',
     description: '',
     price: '',
     stock: '',
-    categories: '',   // comma separated string e.g. "Electronics, Sale"
+    categories: '',
   })
 
-  const [loading, setLoading] = useState(isEditing)  // only load if editing
+  // Stores the existing image URL when editing
+  const [existingImage, setExistingImage] = useState(null)
+
+  // Stores the new image file selected by seller
+  const [imageFile, setImageFile] = useState(null)
+
+  // Preview URL for the newly selected image
+  const [imagePreview, setImagePreview] = useState(null)
+
+  // Whether seller wants to delete the existing image
+  const [deleteImage, setDeleteImage] = useState(false)
+
+  const [loading, setLoading] = useState(isEditing)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
-  // If editing — fetch existing product and pre-fill form
   useEffect(() => {
     if (!isEditing) return
 
@@ -33,9 +43,10 @@ function ProductForm() {
           description: p.description || '',
           price: p.price,
           stock: p.stock,
-          // Convert array back to comma separated string for the input
           categories: p.categories.join(', '),
         })
+        // Save existing image URL to show as preview
+        setExistingImage(p.image)
       })
       .catch(() => setError('Failed to load product.'))
       .finally(() => setLoading(false))
@@ -45,35 +56,58 @@ function ProductForm() {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
+  // When seller picks an image file
+  function handleImageChange(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    setImageFile(file)
+    setDeleteImage(false)
+    // Create a local preview URL so seller can see the image
+    setImagePreview(URL.createObjectURL(file))
+  }
+
+  // When seller clicks delete image
+  function handleDeleteImage() {
+    setDeleteImage(true)
+    setImageFile(null)
+    setImagePreview(null)
+    setExistingImage(null)
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
     setSaving(true)
 
-    // Convert comma separated categories string to array
-    // e.g. "Electronics, Sale" → ["Electronics", "Sale"]
-    const categoriesArray = form.categories
-      .split(',')
-      .map(c => c.trim())
-      .filter(c => c.length > 0)
+    // ✅ Use FormData instead of JSON
+    // This is required for file uploads
+    const formData = new FormData()
+    formData.append('name', form.name)
+    formData.append('description', form.description)
+    formData.append('price', form.price)
+    formData.append('stock', form.stock)
+    formData.append('categories', form.categories)
 
-    const payload = {
-      name: form.name,
-      description: form.description,
-      price: form.price,
-      stock: form.stock,
-      categories: categoriesArray,
+    // Append image file if selected
+    if (imageFile) {
+      formData.append('image', imageFile)
+    }
+
+    // Tell backend to delete image if seller clicked delete
+    if (deleteImage) {
+      formData.append('delete_image', 'true')
     }
 
     try {
       if (isEditing) {
-        // Update existing product
-        await api.put(`/product/update/${id}/`, payload)
+        await api.put(`/product/update/${id}/`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
       } else {
-        // Create new product
-        await api.post('/product/create/', payload)
+        await api.post('/product/create/', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
       }
-      // Go back to products list after save
       navigate('/seller/products')
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to save product.')
@@ -141,7 +175,6 @@ function ProductForm() {
                   required
                 />
               </div>
-
               <div className="form-group">
                 <label>Stock</label>
                 <input
@@ -158,16 +191,58 @@ function ProductForm() {
 
             <div className="form-group">
               <label>Categories</label>
-              {/* Comma separated — backend splits this into array */}
               <input
                 name="categories"
-                placeholder="e.g. Electronics, Sale, Featured"
+                placeholder="e.g. Electronics, Sale"
                 value={form.categories}
                 onChange={handleChange}
               />
               <span className="form-hint">
                 Separate multiple categories with a comma
               </span>
+            </div>
+
+            {/* ✅ Image upload section */}
+            <div className="form-group">
+              <label>Product Image</label>
+
+              {/* Show existing or new preview */}
+              {(imagePreview || existingImage) && (
+                <div className="image-preview-wrapper">
+                  <img
+                    src={imagePreview || existingImage}
+                    alt="Product preview"
+                    className="image-preview"
+                  />
+                  <button
+                    type="button"
+                    className="delete-image-btn"
+                    onClick={handleDeleteImage}
+                  >
+                    🗑️ Remove Image
+                  </button>
+                </div>
+              )}
+
+              {/* Only show file input if no image selected */}
+              {!imagePreview && !existingImage && (
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="image-input"
+                />
+              )}
+
+              {/* Allow replacing image if one exists */}
+              {(imagePreview || existingImage) && (
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="image-input"
+                />
+              )}
             </div>
 
             <div className="form-actions">
@@ -191,7 +266,6 @@ function ProductForm() {
 
           </form>
         </div>
-
       </div>
     </SellerLayout>
   )

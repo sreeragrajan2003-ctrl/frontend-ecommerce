@@ -420,3 +420,76 @@
   background: #aaa;
   cursor: not-allowed;
 }
+
+/* Image upload in product form */
+.image-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.image-preview {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.delete-image-btn {
+  width: fit-content;
+  padding: 0.4rem 0.9rem;
+  background: #fff0f0;
+  color: #c62828;
+  border: 1px solid #ffcccc;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delete-image-btn:hover {
+  background: #ffdddd;
+}
+
+.image-input {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Buyer info card in seller orders */
+.buyer-info-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #f0f0f0;
+}
+
+.buyer-info-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0.75rem;
+}
+
+.buyer-info-row {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #f8f8f8;
+  color: #333;
+}
+
+.buyer-info-row:last-child {
+  border-bottom: none;
+}
+
+.buyer-info-label {
+  width: 70px;
+  color: #888;
+  flex-shrink: 0;
+  font-weight: 500;
+}

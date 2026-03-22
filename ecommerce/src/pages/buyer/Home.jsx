@@ -143,3 +143,35 @@ function ProductCard({ product }) {
 }
 
 export default Home
+
+function ProductCard({ product }) {
+  return (
+    <Link to={`/product/${product.id}`} className="product-card">
+
+      {/* ✅ Show real image if available, otherwise show emoji */}
+      <div className="product-card-img">
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={product.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        ) : (
+          '🛍️'
+        )}
+      </div>
+
+      <div className="product-card-body">
+        <h3 className="product-card-name">{product.name}</h3>
+        <p className="product-card-categories">
+          {product.categories.join(', ')}
+        </p>
+        <p className="product-card-price">₹{product.price}</p>
+        <p className={`product-card-stock ${product.stock === 0 ? 'out-of-stock' : ''}`}>
+          {product.stock === 0 ? 'Out of stock' : `${product.stock} in stock`}
+        </p>
+      </div>
+
+    </Link>
+  )
+}
